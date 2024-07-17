@@ -1,0 +1,119 @@
+*******************************************************
+ PAINKILLER PKMDL
+ (Unity3D axes, 64-bit system)
+*******************************************************
+
+(uint) 3 // start file
+
+(uint) export_file_name_lenght
+(null_terminated_string) export_file_name
+
+(uint) export_path_lenght
+(null_terminated_string) export_path
+
+(uint) identifier_lenght
+(null_terminated_string) identifier // AnimatedMesh
+
+6 x (int) // unknown data
+
+(uint) export_path_lenght
+(null_terminated_string) export_path
+
+(int) // unknown data
+
+=======================[ Joints ]=======================
+(int) joints_count
+
+for(joints_count)
+{
+    (uint) joint_name_lenght
+    (null_terminated_string) joint_name
+    
+    (matrix4x4  4 * 16 bytes) transform_matrix
+    // sequence read: m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33, 
+    [ (float) m00,  (float) -m01, (float) -m02, (float) -m03 ]
+    [ (float) -m10, (float) m11,  (float) m12,  (float) m13  ]
+    [ (float) -m20, (float) m21,  (float) m22,  (float) m23  ]
+    [ (float) m30,  (float) m31,  (float) m32,  (float) m33  ]
+    
+    (byte) child_count
+}
+
+=======================[ End Joints ]=======================
+
+=======================[ Skeletal Meshes ]=======================
+(int) mesh_count
+
+for(mesh_count)
+{
+    (uint) mesh_name_lenght
+    (null_terminated_string) mesh_name
+    
+-------------------[ Unknown ]-------------------
+    2 x (int) unknown_data
+-------------------[ Bump Texture ]-------------------
+
+    (uint) bump_texture_name_lenght
+    (null_terminated_string) bump_texture_name
+    
+-------------------[ Color Textures ]-------------------
+
+    (uint) textures_count
+    
+    for(textures_count)
+    {
+        (uint) texture_name_lenght
+        (null_terminated_string) texture_name
+		(uint) texture_offset	// by vertices
+		(uint) texture_size	// by faces
+    }
+    
+-------------------[ Triangles ]-------------------
+
+    (uint) triangles_count
+    
+    for(triangles_count / 3)
+    {
+		(uint) vertex 0
+		(uint) vertex 2
+		(uint) vertex 1
+    }
+    
+-------------------[ Unknown ]-------------------
+    (uint) 0
+-------------------[ Vertices ]-------------------
+
+    (uint) vertices_count
+    
+    for(vertices_count)
+    {
+		(float) -position_x
+		(float) position_y
+		(float) position_z
+		(float) -normal_x
+		(float) normal_y
+		(float) normal_z
+		(float) u
+		(float) 1 - v
+    }
+    
+-------------------[ Unknown ]-------------------
+    (uint) 0
+    (uint) 0  
+-------------------[ Weights ]-------------------
+    
+    (uint) weights_count
+    
+    for(weights_count)
+    {
+        (uint) joints_count
+        
+        for(joints_count)
+        {
+            (ushort) joint_index
+            (float) weight
+        }
+    }
+}
+
+=======================[ End Skeletal Meshes ]=======================
